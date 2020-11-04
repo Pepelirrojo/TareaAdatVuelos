@@ -11,7 +11,7 @@ public class Principal {
 	public static void main(String[] args) {
 		ejecucion();
 	}
-	
+
 	public static void ejecucion() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("¿DESDE DONDE VAS A COGER LOS ARCHIVOS?\n1.Base de Datos SQL.\n2.Archivos\n3.Hibernate.");
@@ -34,8 +34,8 @@ public class Principal {
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + opcion);
 		}
-		System.out
-				.println("INDIQUE SU PETICION:\n1.Insertar:\n2.Borrar\n3.Buscar\n4.Modificar\n5.Migrar Tabla\n6.Ver Todo\n7.Finalizar");
+		System.out.println(
+				"INDIQUE SU PETICION:\n1.Insertar:\n2.Borrar\n3.Buscar\n4.Modificar\n5.Migrar Tabla\n6.Ver Todo\n7.Finalizar");
 		opcion = sc.nextInt();
 		while (opcion != 7) {
 			switch (opcion) {
@@ -44,10 +44,8 @@ public class Principal {
 				String tabla = sc.next();
 				System.out.println("MUY BIEN, AHORA INTRODUZCA LOS DATOS DEL CAMPO A INSERTAR: ");
 				String[] datos = new String[miAcceso.getNumColumnas(tabla)];
-				for (int i = 0; i < datos.length - 1; i++) {
-					datos[i] = sc.next();
-				}
-				System.out.println(miAcceso.insertar(tabla, datos) ? "REGISTRO INSERTADO CORRECTAMENTE"
+				Vuelo miVuelo = new Vuelo(sc.next(), sc.next(), sc.next(), sc.next(), sc.next(), sc.next(), sc.next());
+				System.out.println(miAcceso.insertar(tabla, miVuelo) ? "REGISTRO INSERTADO CORRECTAMENTE"
 						: "ERROR AL HACER EL REGISTRO");
 				break;
 			case 2:
@@ -80,16 +78,36 @@ public class Principal {
 						: "NO SE HA PODIDO MODIFICAR");
 				break;
 			case 5:
+				System.out.println("ELIGE A QUE PLATAFORMA QUIERES MIGRAR TU BBDD:\n1.TablaSQL\n2.Fichero");
+				opcion = sc.nextInt();
+				Funcionalidad miCopia;
 				System.out.println("INDIQUE LA TABLA A EMIGRAR:");
 				String tablaEmigrar = sc.next();
 				System.out.println("INDIQUE EL NOMBRE DEL ARCHIVO:");
 				String nombreArchivo = sc.next();
-				System.out.println(miAcceso.migrar(tablaEmigrar, nombreArchivo)? "COPIA DE SEGURIDAD EXITOSA" : "NO SE PUDO HACER LA COPIA DE SEGURIDAD");
+				HashMap<Integer, Vuelo> misVuelosCopia = miAcceso.verTodo(tablaEmigrar);
+				switch (opcion) {
+				case 1:
+					System.out.println("ENTENDIDO. TABLA DE BASE DE DATOS.");
+					miCopia = new BDManager();
+					
+					break;
+				case 2:
+					System.out.println("ENTENDIDO. ARCHIVOS.");
+					File miArchivo = new File("C:\\Users\\User\\Desktop\\Workspace\\TareaAdatVuelos\\ " + nombreArchivo + ".txt");
+					miCopia = new FileManager(miArchivo);
+					break;
+				default:
+					throw new IllegalArgumentException("Unexpected value: " + opcion);
+				}
+				System.out
+						.println(miCopia.migrar(tablaEmigrar, nombreArchivo, misVuelosCopia) ? "COPIA DE SEGURIDAD EXITOSA"
+								: "NO SE PUDO HACER LA COPIA DE SEGURIDAD");
 				break;
 			case 6:
 				System.out.println("INDIQUE LA TABLA A VER:");
 				String tablaVerTodo = sc.next();
-				HashMap<Integer, Vuelo> misVuelos =  miAcceso.verTodo(tablaVerTodo);
+				HashMap<Integer, Vuelo> misVuelos = miAcceso.verTodo(tablaVerTodo);
 				for (Entry<Integer, Vuelo> entry : misVuelos.entrySet()) {
 					System.out.println(entry.getValue());
 				}

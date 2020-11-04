@@ -7,11 +7,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Map.Entry;
 
 import general.Funcionalidad;
 import general.Vuelo;
@@ -49,7 +51,7 @@ public class FileManager implements Funcionalidad {
 	}
 
 	@Override
-	public boolean insertar(String tabla, String[] datos) {
+	public boolean insertar(String tabla, Vuelo miVuelo) {
 		boolean funciona = false;
 		try {
 			if (!miFile.exists()) {
@@ -59,13 +61,7 @@ public class FileManager implements Funcionalidad {
 					new OutputStreamWriter(new FileOutputStream(miFile, true), "utf-8"));
 			System.out.println("Introduzca el Id del campo a insertar:");
 			Scanner sc = new Scanner(System.in);
-			String campo = sc.next() + "/";
-			for (int i = 1; i < datos.length; i++) {
-				campo += datos[i];
-				if (i != datos.length - 1) {
-					campo += "/";
-				}
-			}
+			String campo = miVuelo.toStringFile(sc.next());
 			fileWrite.write("\n" + campo);
 			fileWrite.close();
 			funciona = true;
@@ -149,9 +145,28 @@ public class FileManager implements Funcionalidad {
 	}
 
 	@Override
-	public boolean migrar(String tabla, String nombreArchivo) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean migrar(String tabla, String nombreArchivo,  HashMap<Integer, Vuelo> vuelosEmigrar) {
+		boolean exito = false;
+		String ruta = "..\\TareaAdatVuelos\\" + nombreArchivo + ".txt";
+		File file = new File(ruta);
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true), "utf-8"));
+			for (Entry<Integer, Vuelo> entry : vuelosEmigrar.entrySet()) {
+				bw.write("\n" + entry.getValue());
+			}
+			bw.close();
+			exito = true;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return exito;
 	}
 
 	@Override

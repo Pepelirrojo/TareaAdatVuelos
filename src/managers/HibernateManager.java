@@ -30,9 +30,7 @@ public class HibernateManager implements Funcionalidad {
 	}
 
 	@Override
-	public boolean insertar(String tabla, String[] datos) {
-		Vuelo miVuelo = new Vuelo(datos[0], datos[1], datos[2], datos[3], datos[4], datos[5], datos[6]);
-		System.out.println(miVuelo);
+	public boolean insertar(String tabla, Vuelo miVuelo) {
 		SessionFactory sf = new Configuration().configure().buildSessionFactory();
 		Session s = sf.openSession();
 		s.beginTransaction();
@@ -74,7 +72,7 @@ public class HibernateManager implements Funcionalidad {
 	}
 
 	@Override
-	public boolean migrar(String tabla, String nombreArchivo) {
+	public boolean migrar(String tabla, String nombreArchivo, HashMap<Integer, Vuelo> misVuelos) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -28,6 +28,11 @@ public class Vuelo {
 				+ ", fecha=" + fecha + ", hora=" + hora + ", plazas_totales=" + plazas_totales + ", plazas_disponibles="
 				+ plazas_disponibles + "]";
 	}
+	public String toStringFile(String idFile) {
+		return "Vuelo [id=" + idFile + ", codigo_vuelo=" + codigo_vuelo + ", origen=" + origen + ", destino=" + destino
+				+ ", fecha=" + fecha + ", hora=" + hora + ", plazas_totales=" + plazas_totales + ", plazas_disponibles="
+				+ plazas_disponibles + "]";
+	}
 
 	public Vuelo(int id, String codigo_vuelo, String origen, String destino, String fecha, String hora,
 			String plazas_totales, String plazas_disponibles) {

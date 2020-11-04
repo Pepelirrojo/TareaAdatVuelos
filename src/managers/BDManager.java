@@ -13,6 +13,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import general.*;
 
@@ -59,7 +60,7 @@ public class BDManager implements Funcionalidad {
 	}
 
 	@Override
-	public boolean insertar(String tabla, String[] datos) {
+	public boolean insertar(String tabla, Vuelo miVuelo) {
 		boolean exito = false;
 		int resultado = 0;
 		try {
@@ -86,9 +87,13 @@ public class BDManager implements Funcionalidad {
 			}
 			query += ");";
 			PreparedStatement pstmt = conexion.prepareStatement(query);
-			for (int i = 1; i < numColumnas; i++) {
-				pstmt.setString(i, datos[i]);
-			}
+			pstmt.setString(1, miVuelo.getCodigo_vuelo());
+			pstmt.setString(2, miVuelo.getOrigen());
+			pstmt.setString(3, miVuelo.getDestino());
+			pstmt.setString(4, miVuelo.getFecha());
+			pstmt.setString(5, miVuelo.getHora());
+			pstmt.setString(6, miVuelo.getPlazas_disponibles());
+			pstmt.setString(7, miVuelo.getPlazas_totales());
 			resultado = pstmt.executeUpdate();
 			pstmt.close();
 			exito = true;
@@ -157,29 +162,22 @@ public class BDManager implements Funcionalidad {
 	}
 
 	@Override
-	public boolean migrar(String tabla, String nombreArchivo) {
+	public boolean migrar(String tabla, String nombreArchivo, HashMap<Integer, Vuelo> vuelosEmigrar) {
 		boolean exito = false;
-		HashMap<Integer, Vuelo> tablaSeguridad = verTodo(tabla);
-		String ruta = "..\\TareaADAT\\" + nombreArchivo + ".txt";
-		File file = new File(ruta);
-		if (!file.exists()) {
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+		PreparedStatement ps;
 		try {
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, true), "utf-8"));
-			for (int i = 0; i < tablaSeguridad.size(); i++) {
-				bw.write("\n" + tablaSeguridad.get(i));
+			ps = conexion.prepareStatement(
+					"CREATE TABLE IF NOT EXISTS " + nombreArchivo + " (Id SERIAL NOT NULL PRIMARY KEY,Codigo_vuelo varchar(5) ,Origen varchar(50),Destino varchar(50),Fecha varchar(11),Hora varchar(11),Plazas_Totales INTEGER(11), Plazas_Disponibles INTEGER(11))");
+			ps.executeUpdate();
+			ps.close();
+			for (Entry<Integer, Vuelo> entry : vuelosEmigrar.entrySet()) {
+				insertar(nombreArchivo, entry.getValue());
 			}
-			bw.close();
 			exito = true;
-		} catch (IOException e) {
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return exito;
 	}
 
