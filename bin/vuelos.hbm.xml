@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="general.Vuelo" table="vuelos">
+		<id name="id" type="int">
+			<column name="Id" />
+			<generator class="increment" />
+		</id>
+
+		<property name="codigo_vuelo" type="string">
+			<column name="Codigo_vuelo" length="5" not-null="true" />
+		</property>
+
+		<property name="origen" type="string">
+			<column name="Origen" length="50" not-null="true" />
+		</property>
+
+		<property name="destino" type="string">
+			<column name="Destino" length="50" not-null="true" />
+		</property>
+
+		<property name="fecha" type="string">
+			<column name="Fecha" length="11" not-null="true" />
+		</property>
+
+		<property name="hora" type="string">
+			<column name="Hora" length="5" not-null="true" />
+		</property>
+		
+		<property name="plazas_totales" type="string">
+			<column name="PlazasTotales" length="11" not-null="true" />
+		</property>
+		
+		<property name="plazas_disponibles" type="string">
+			<column name="PlazasDisponibles" length="11" not-null="true" />
+		</property>
+		
+	</class>
+
+</hibernate-mapping>
