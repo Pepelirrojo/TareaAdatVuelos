@@ -1,0 +1,6 @@
+
+Vuelo [id=1, codigo_vuelo=ibir, origen=Madrid, destino=Shangai, fecha=2020-02-03, hora=13:45, plazas_totales=45, plazas_disponibles=3]
+Vuelo [id=4, codigo_vuelo=qwer, origen=Rovsd, destino=ElEsco, fecha=2020-03-12, hora=22:22, plazas_totales=32, plazas_disponibles=2]
+Vuelo [id=6, codigo_vuelo=qwer, origen=Robledo, destino=Toledo, fecha=2020-12-02, hora=12:12, plazas_totales=34, plazas_disponibles=3 ]
+Vuelo [id=7, codigo_vuelo=qer, origen=Madrid, destino=ers, fecha=2020-03-03, hora=12:12, plazas_totales=34, plazas_disponibles=4]
+Vuelo [id=8, codigo_vuelo=qwer, origen=Robledo, destino=Elesco, fecha=2020-03-03, hora=12:12, plazas_totales=23, plazas_disponibles=2]

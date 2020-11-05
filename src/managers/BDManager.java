@@ -23,6 +23,7 @@ public class BDManager implements Funcionalidad {
 	private String pwd = "";
 	private String url = "jdbc:mysql://localhost/" + db
 			+ "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+
 	private Connection conexion;
 
 	public BDManager() {
@@ -92,8 +93,8 @@ public class BDManager implements Funcionalidad {
 			pstmt.setString(3, miVuelo.getDestino());
 			pstmt.setString(4, miVuelo.getFecha());
 			pstmt.setString(5, miVuelo.getHora());
-			pstmt.setString(6, miVuelo.getPlazas_disponibles());
-			pstmt.setString(7, miVuelo.getPlazas_totales());
+			pstmt.setString(6, miVuelo.getPlazas_totales());
+			pstmt.setString(7, miVuelo.getPlazas_disponibles());
 			resultado = pstmt.executeUpdate();
 			pstmt.close();
 			exito = true;
@@ -166,8 +167,8 @@ public class BDManager implements Funcionalidad {
 		boolean exito = false;
 		PreparedStatement ps;
 		try {
-			ps = conexion.prepareStatement(
-					"CREATE TABLE IF NOT EXISTS " + nombreArchivo + " (Id SERIAL NOT NULL PRIMARY KEY,Codigo_vuelo varchar(5) ,Origen varchar(50),Destino varchar(50),Fecha varchar(11),Hora varchar(11),Plazas_Totales INTEGER(11), Plazas_Disponibles INTEGER(11))");
+			ps = conexion.prepareStatement("CREATE TABLE IF NOT EXISTS " + nombreArchivo
+					+ " (Id SERIAL NOT NULL PRIMARY KEY,Codigo_vuelo varchar(5) ,Origen varchar(50),Destino varchar(50),Fecha varchar(11),Hora varchar(11),Plazas_Totales INTEGER(11), Plazas_Disponibles INTEGER(11))");
 			ps.executeUpdate();
 			ps.close();
 			for (Entry<Integer, Vuelo> entry : vuelosEmigrar.entrySet()) {

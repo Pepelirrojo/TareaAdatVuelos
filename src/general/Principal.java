@@ -24,6 +24,7 @@ public class Principal {
 			break;
 		case 2:
 			System.out.println("ENTENDIDO. ARCHIVOS.");
+			
 			File miArchivo = new File("C:\\Users\\User\\Desktop\\Workspace\\TareaADAT\\Archivo.txt");
 			miAcceso = new FileManager(miArchivo);
 			break;
@@ -35,7 +36,7 @@ public class Principal {
 			throw new IllegalArgumentException("Unexpected value: " + opcion);
 		}
 		System.out.println(
-				"INDIQUE SU PETICION:\n1.Insertar:\n2.Borrar\n3.Buscar\n4.Modificar\n5.Migrar Tabla\n6.Ver Todo\n7.Finalizar");
+				"INDIQUE SU PETICION:\n1.Insertar:\n2.Borrar\n3.Buscar\n4.Modificar\n5.Copia de Seguridad\n6.Ver Todo\n7.Finalizar");
 		opcion = sc.nextInt();
 		while (opcion != 7) {
 			switch (opcion) {
@@ -78,7 +79,7 @@ public class Principal {
 						: "NO SE HA PODIDO MODIFICAR");
 				break;
 			case 5:
-				System.out.println("ELIGE A QUE PLATAFORMA QUIERES MIGRAR TU BBDD:\n1.TablaSQL\n2.Fichero");
+				System.out.println("ELIGE A QUE PLATAFORMA QUIERES HACER TU COPIA DE SEGURIDAD:\n1.TablaSQL\n2.Fichero");
 				opcion = sc.nextInt();
 				Funcionalidad miCopia;
 				System.out.println("INDIQUE LA TABLA A EMIGRAR:");
