@@ -14,7 +14,8 @@ public class Principal {
 
 	public static void ejecucion() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("¿DESDE DONDE VAS A COGER LOS ARCHIVOS?\n1.Base de Datos SQL.\n2.Archivos\n3.Hibernate.");
+		System.out.println(
+				"¿DESDE DONDE VAS A COGER LOS ARCHIVOS?\n1.Base de Datos SQL.\n2.Archivos\n3.Hibernate\n4.Mongo");
 		int opcion = sc.nextInt();
 		Funcionalidad miAcceso;
 		switch (opcion) {
@@ -24,13 +25,16 @@ public class Principal {
 			break;
 		case 2:
 			System.out.println("ENTENDIDO. ARCHIVOS.");
-			
 			File miArchivo = new File("C:\\Users\\User\\Desktop\\Workspace\\TareaADAT\\Archivo.txt");
 			miAcceso = new FileManager(miArchivo);
 			break;
 		case 3:
 			System.out.println("ENTENDIDO. HIBERNATE");
 			miAcceso = new HibernateManager();
+			break;
+		case 4:
+			System.out.println("ENTENDIDO. MONGO");
+			miAcceso = new MongoDBManager();
 			break;
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + opcion);
@@ -79,7 +83,8 @@ public class Principal {
 						: "NO SE HA PODIDO MODIFICAR");
 				break;
 			case 5:
-				System.out.println("ELIGE A QUE PLATAFORMA QUIERES HACER TU COPIA DE SEGURIDAD:\n1.TablaSQL\n2.Fichero");
+				System.out
+						.println("ELIGE A QUE PLATAFORMA QUIERES HACER TU COPIA DE SEGURIDAD:\n1.TablaSQL\n2.Fichero\n3.MongoDB");
 				opcion = sc.nextInt();
 				Funcionalidad miCopia;
 				System.out.println("INDIQUE LA TABLA A EMIGRAR:");
@@ -91,18 +96,22 @@ public class Principal {
 				case 1:
 					System.out.println("ENTENDIDO. TABLA DE BASE DE DATOS.");
 					miCopia = new BDManager();
-					
 					break;
 				case 2:
 					System.out.println("ENTENDIDO. ARCHIVOS.");
-					File miArchivo = new File("C:\\Users\\User\\Desktop\\Workspace\\TareaAdatVuelos\\ " + nombreArchivo + ".txt");
+					File miArchivo = new File(
+							"C:\\Users\\User\\Desktop\\Workspace\\TareaAdatVuelos\\ " + nombreArchivo + ".txt");
 					miCopia = new FileManager(miArchivo);
+					break;
+				case 3:
+					System.out.println("ENTENDIDO. MONGO.");
+					miCopia = new MongoDBManager();
 					break;
 				default:
 					throw new IllegalArgumentException("Unexpected value: " + opcion);
 				}
-				System.out
-						.println(miCopia.migrar(tablaEmigrar, nombreArchivo, misVuelosCopia) ? "COPIA DE SEGURIDAD EXITOSA"
+				System.out.println(
+						miCopia.migrar(tablaEmigrar, nombreArchivo, misVuelosCopia) ? "COPIA DE SEGURIDAD EXITOSA"
 								: "NO SE PUDO HACER LA COPIA DE SEGURIDAD");
 				break;
 			case 6:

@@ -25,5 +25,6 @@
 	<classpathentry kind="lib" path="libs/mysql-connector-java-8.0.19.jar"/>
 	<classpathentry kind="lib" path="libs/stax-ex-1.8.jar"/>
 	<classpathentry kind="lib" path="libs/txw2-2.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/Workspace/TareaAdatVuelos/libs/mongo-java-driver-3.12.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

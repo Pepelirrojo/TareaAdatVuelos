@@ -1,5 +1,6 @@
 package general;
 
+import java.util.ArrayList;
 import java.util.function.Function;
 
 import javax.persistence.GeneratedValue;
@@ -8,7 +9,6 @@ import javax.persistence.Id;
 import org.hibernate.annotations.GenericGenerator;
 
 public class Vuelo {
-
 	private int id;
 	private String codigo_vuelo;
 	private String origen;
